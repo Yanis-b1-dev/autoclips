@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Autoclips — Organic Content Generator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div class="bg-blobs">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <div class="logo">
+        <span class="logo-icon">✂️</span>
+        <div>
+          <h1>Autoclips</h1>
+          <p class="tagline">Organic content, automated.</p>
+        </div>
+      </div>
+      <div class="badge">3s hook + CTA = ready to post</div>
+    </header>
+
+    <!-- Step 1: CTA Upload -->
+    <section class="card" id="step-cta">
+      <div class="step-label"><span class="step-num">1</span> Upload Your CTA Video</div>
+      <div
+        class="drop-zone"
+        id="cta-drop"
+        onclick="document.getElementById('cta-input').click()"
+        ondragover="onDragOver(event)"
+        ondragleave="onDragLeave(event)"
+        ondrop="onDropCTA(event)"
+      >
+        <input type="file" id="cta-input" accept="video/*" hidden onchange="handleCTAFile(this.files[0])" />
+        <div class="drop-icon">🎬</div>
+        <div class="drop-text" id="cta-label">Drag & drop your CTA video here<br /><span class="drop-sub">or click to browse — any length, any format</span></div>
+        <div class="upload-progress-wrap" id="cta-progress-wrap" style="display:none">
+          <div class="upload-progress-bar" id="cta-progress-bar"></div>
+        </div>
+      </div>
+      <div class="cta-status" id="cta-status"></div>
+    </section>
+
+    <!-- Step 2: URLs -->
+    <section class="card" id="step-urls">
+      <div class="step-label"><span class="step-num">2</span> Paste YouTube Shorts URLs</div>
+      <div class="url-hint">One URL per line — each will be trimmed to <strong>3 seconds</strong> and combined with your CTA.</div>
+      <textarea
+        id="url-input"
+        class="url-textarea"
+        placeholder="https://youtube.com/shorts/abc123&#10;https://youtube.com/shorts/def456&#10;https://youtube.com/shorts/xyz789"
+        rows="6"
+        spellcheck="false"
+      ></textarea>
+      <div class="url-count" id="url-count">0 URLs</div>
+    </section>
+
+    <!-- Step 3: Process -->
+    <section class="card" id="step-process">
+      <div class="step-label"><span class="step-num">3</span> Generate Clips</div>
+      <button class="btn-process" id="btn-process" onclick="startProcessing()">
+        <span class="btn-icon">⚡</span>
+        <span id="btn-text">Generate Clips</span>
+      </button>
+
+      <!-- Job Progress -->
+      <div id="job-section" style="display:none">
+        <div class="job-header">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <span id="job-summary">Processing…</span>
+            <span id="job-download-batch"></span>
+          </div>
+          <span class="job-id" id="job-id-label"></span>
+        </div>
+        <div id="url-results" class="url-results"></div>
+      </div>
+    </section>
+
+    <!-- Output Files -->
+    <section class="card" id="output-section" style="display:none">
+      <div class="step-label">
+        <span>📦 Output Files</span>
+        <div style="display: flex; gap: 8px;">
+          <a class="btn-download" href="/download-all" download>⬇ Download all</a>
+          <button class="btn-clear" onclick="clearOutput()">Clear all</button>
+        </div>
+      </div>
+      <div id="output-list" class="output-list"></div>
+    </section>
+  </div>
+
+  <script src="/static/script.js"></script>
+</body>
+</html>
